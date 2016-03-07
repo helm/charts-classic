@@ -1,0 +1,55 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: weave-scope-probe
+  labels:
+    heritage: helm
+    k8s-app:  weave-scope-probe
+spec:
+  template:
+    metadata:
+      name:  weave-scope-probe
+      labels:
+        heritage: helm
+        k8s-app:  weave-scope-probe
+    spec:
+      hostPID: true
+      hostNetwork: true
+      containers:
+      - name:  weave-scope-probe
+        image: weaveworks/scope:0.13.1
+        args:
+        - --no-app
+        # Remove argument below if you don't use a kubernetes-specific Docker bridge (cbr0)
+        - --probe.docker.bridge=cbr0
+        - --probe.docker=true
+        - --probe.kubernetes=true
+        - --probe.weave.router.addr=
+        # We cannot refer to the Scope App with its Kubernetes Service
+        # DNS name (weave-scope-app) directly because Docker doesn't
+        # allow customizing the DNS servers (the Kubernetes DNS add-on
+        # server in this case) of a container when it runs in the
+        # host's network namespace (see
+        # https://github.com/docker/docker/issues/10384#issuecomment-72069550
+        # ). Instead, we use variable expansion on its service
+        # environment variables.
+        #
+        # NOTE: Unfortunately this imposes a specific creation
+        # ordering since the Scope App Service needs to be created first for
+        # the service environment variables below to be accesible.
+        - "$(WEAVE_SCOPE_APP_SERVICE_HOST):$(WEAVE_SCOPE_APP_SERVICE_PORT)"
+        # If you have a scope.weave.works account and want to run
+        # Scope in Cloud Service Mode, comment out the argument above and
+        # uncomment the argument below, replacing "foo" with the Service
+        # token which you will obtain when logging in to your
+        # scope.weave.works account:
+        # - --probe.token=foo
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - name: docker-sock
+          mountPath: /var/run/docker.sock
+      volumes:
+      - name: docker-sock
+        hostPath:
+          path: /var/run/docker.sock
