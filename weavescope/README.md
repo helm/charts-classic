@@ -9,3 +9,5 @@ uncomment the line below, replacing "foo" with the Service token which you will 
 scope.weave.works account:
 
 "--probe.token=foo" ]
+
+DaemonSets need to be enabled in Kubernetes cluster and all node hosts are run with the Docker socket at /var/run/docker.sock

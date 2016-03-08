@@ -20,4 +20,5 @@ spec:
         - --app.weave.addr=
         ports:
         - containerPort: 4040
+          name: weave-scope-app
           hostPort: 4040
