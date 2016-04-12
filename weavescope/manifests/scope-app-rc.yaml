@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: weave-scope-app
+  labels:
+    provider: weave-scope-app
+    heritage: helm
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        provider: weave-scope-app
+    spec:
+      containers:
+      - name: weave-scope-app
+        image: weaveworks/scope:0.13.1
+        args:
+        - --no-probe
+        - --app.weave.addr=
+        ports:
+        - containerPort: 4040
+          name: weave-scope-app
+          hostPort: 4040
