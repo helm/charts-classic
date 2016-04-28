@@ -17,21 +17,22 @@ spec:
       hostNetwork: true
       containers:
       - name:  weave-scope-probe
-        image: weaveworks/scope:0.13.1
+        image: weaveworks/scope:0.14.0
         args:
         - --no-app
         # Remove argument below if you don't use a kubernetes-specific Docker bridge (cbr0)
         - --probe.docker.bridge=cbr0
         - --probe.docker=true
         - --probe.kubernetes=true
-        - --probe.weave.router.addr=
+        - --probe.weave.addr=
         # We cannot refer to the Scope App with its Kubernetes Service
-        # DNS name (weave-scope-app) directly because Docker doesn't
+        # DNS name (weave-scope-app) directly because Docker nor Kubernetes
         # allow customizing the DNS servers (the Kubernetes DNS add-on
         # server in this case) of a container when it runs in the
         # host's network namespace (see
-        # https://github.com/docker/docker/issues/10384#issuecomment-72069550
-        # ). Instead, we use variable expansion on its service
+        # https://github.com/kubernetes/kubernetes/issues/17406 and
+        # https://github.com/docker/docker/issues/10384).
+        # Instead, we use variable expansion on its service
         # environment variables.
         #
         # NOTE: Unfortunately this imposes a specific creation

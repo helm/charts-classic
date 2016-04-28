@@ -14,11 +14,10 @@ spec:
     spec:
       containers:
       - name: weave-scope-app
-        image: weaveworks/scope:0.13.1
+        image: weaveworks/scope:0.14.0
         args:
         - --no-probe
         - --app.weave.addr=
         ports:
         - containerPort: 4040
-          name: weave-scope-app
           hostPort: 4040
