@@ -26,8 +26,8 @@ trap gke::destroy EXIT ERR
 
 gke::setup
 
-helm::setup
+helmc::setup
 
 gke::create-cluster
 
-helm::test
+helmc::test

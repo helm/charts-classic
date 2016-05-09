@@ -1,8 +1,8 @@
 export TEST_ROOT_DIR="$(cd "$(dirname $(dirname $0))"; pwd)"
-export HELM_ARTIFACT_REPO="${HELM_ARTIFACT_REPO:-helm-ci}"
+export HELMC_ARTIFACT_REPO="${HELMC_ARTIFACT_REPO:-helm-ci}"
 CLUSTER_NAME="${CLUSTER_NAME:-helm-testing}"
 GOOGLE_SDK_DIR="${HOME}/google-cloud-sdk"
-export HELM_BIN="${TEST_ROOT_DIR}/helm.bin"
+export HELMC_BIN="${TEST_ROOT_DIR}/helmc.bin"
 export TEST_DIR="${TEST_ROOT_DIR}/_test"
 export SECRETS_DIR="${TEST_DIR}/secrets"
 SKIP_DESTROY=${SKIP_DESTROY:-false}

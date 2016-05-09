@@ -9,8 +9,8 @@ cd "${TEST_ROOT_DIR}"
 source _test/lib.sh
 source _test/gke.sh
 
-gke::install # "need" kubectl for helm
+gke::install # "need" kubectl for helmc
 
-helm::setup
+helmc::setup
 
-helm::lint
+helmc::lint
