@@ -3,11 +3,12 @@ kind: Service
 metadata:
   name: weave-scope-app
   labels:
-    provider: weave-scope-app
+    app: weave-scope-app
+    provider: weavescope
     heritage: helm
 spec:
   ports:
   - name: app
     port: 4040
   selector:
-    provider: weave-scope-app
+    app: weave-scope-app

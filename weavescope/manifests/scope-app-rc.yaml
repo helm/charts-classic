@@ -3,14 +3,17 @@ kind: ReplicationController
 metadata:
   name: weave-scope-app
   labels:
-    provider: weave-scope-app
+    app: weave-scope-app
+    provider: weavescope
     heritage: helm
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        provider: weave-scope-app
+        app: weave-scope-app
+        provider: weavescope
+        heritage: helm
     spec:
       containers:
       - name: weave-scope-app
