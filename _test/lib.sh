@@ -1,14 +1,14 @@
 function move-files {
-  helm doctor # need proper ~/.helm directory structure and config.yml
+  helmc doctor # need proper ~/.helmc directory structure and config.yml
 
   log-info "Staging chart directory"
-  rsync -av . ${HOME}/.helm/cache/charts/
+  rsync -av . ${HOME}/.helmc/cache/charts/
 }
 
-function helm::setup {
-  # Uses HELM_ARTIFACT_REPO to determine which repository to grab helm from
+function helmc::setup {
+  # Uses HELMC_ARTIFACT_REPO to determine which repository to grab helmc from
 
-  log-lifecycle "Installing helm into $(pwd)/.bin"
+  log-lifecycle "Installing helmc into $(pwd)/.bin"
 
   mkdir -p .bin
   (
@@ -20,7 +20,7 @@ function helm::setup {
   move-files
 }
 
-function helm::get-changed-charts {
+function helmc::get-changed-charts {
   git diff --name-only HEAD origin/HEAD -- charts \
     | cut -d/ -f 1-2 \
     | sort \
@@ -42,7 +42,7 @@ function ensure-dirs-exist {
 }
 
 function generate-test-plan {
-  ensure-dirs-exist "$(helm::get-changed-charts)"
+  ensure-dirs-exist "$(helmc::get-changed-charts)"
 }
 
 function get-all-charts {
@@ -61,7 +61,7 @@ function get-all-charts {
   echo "${cleanedlist}"
 }
 
-function helm::test-chart {
+function helmc::test-chart {
   log-warn "Start: ${1}"
   .bin/helm fetch "${1}"
   .bin/helm install "${1}"
@@ -70,7 +70,7 @@ function helm::test-chart {
   log-warn "Done: ${1}"
 }
 
-function helm::test {
+function helmc::test {
   local test_plan
 
   if is-pull-request; then
@@ -85,7 +85,7 @@ function helm::test {
 
   local plan
   for plan in ${test_plan}; do
-    helm::test-chart ${plan}
+    helmc::test-chart ${plan}
   done
 }
 
@@ -99,7 +99,7 @@ function is-pull-request {
   fi
 }
 
-function helm::is-pod-running {
+function helmc::is-pod-running {
   local name="${1}"
 
   if kubectl get pods "${name}" &> /dev/null; then
@@ -121,10 +121,10 @@ function helm::is-pod-running {
   kubectl get pods -o json | jq -r "${jq_provider_label_query}" | grep -q "Running" && return 0
 }
 
-function helm::healthcheck {
+function helmc::healthcheck {
   WAIT_TIME=1
   log-lifecycle "Checking: ${1}"
-  until helm::is-pod-running "${1}"; do
+  until helmc::is-pod-running "${1}"; do
     sleep 1
      (( WAIT_TIME += 1 ))
      if [ ${WAIT_TIME} -gt ${HEALTHCHECK_TIMEOUT_SEC} ]; then
@@ -134,11 +134,11 @@ function helm::healthcheck {
   log-lifecycle "Checked!: ${1}"
 }
 
-function helm::lint {
+function helmc::lint {
   local chart
   for chart in $(get-all-charts); do
-    .bin/helm fetch "${chart}"
-    .bin/helm lint "${chart}"
+    .bin/helmc fetch "${chart}"
+    .bin/helmc lint "${chart}"
   done
 }
 
