@@ -1,25 +1,29 @@
 kind: ReplicationController
 apiVersion: v1
 metadata:
-  name: spark-worker-controller
+  name: spark-master-controller
   labels:
+    component: spark-master
     heritage: helm
     provider: spark
 spec:
-  replicas: 3
+  replicas: 1
   selector:
-    component: spark-worker
+    component: spark-master
   template:
     metadata:
       labels:
-        component: spark-worker
+        component: spark-master
+        heritage: helm
+        provider: spark
     spec:
       containers:
-        - name: spark-worker
+        - name: spark-master
           image: gcr.io/google_containers/spark:1.5.1_v3
-          command: ["/start-worker"]
+          command: ["/start-master"]
           ports:
-            - containerPort: 8081
+            - containerPort: 7077
+            - containerPort: 8080
           resources:
             requests:
               cpu: 100m
