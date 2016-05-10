@@ -3,15 +3,17 @@ kind: DaemonSet
 metadata:
   name: weave-scope-probe
   labels:
+    app: weave-scope-probe
+    provider: weavescope
     heritage: helm
-    k8s-app:  weave-scope-probe
 spec:
   template:
     metadata:
-      name:  weave-scope-probe
+      name: weave-scope-probe
       labels:
+        app: weave-scope-probe
+        provider: weavescope
         heritage: helm
-        k8s-app:  weave-scope-probe
     spec:
       hostPID: true
       hostNetwork: true
