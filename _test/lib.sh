@@ -63,10 +63,10 @@ function get-all-charts {
 
 function helmc::test-chart {
   log-warn "Start: ${1}"
-  .bin/helm fetch "${1}"
-  .bin/helm install "${1}"
-  helm::healthcheck "${1}"
-  .bin/helm uninstall -y "${1}"
+  .bin/helmc fetch "${1}"
+  .bin/helmc install "${1}" -n default
+  helmc::healthcheck "${1}"
+  .bin/helmc uninstall "${1}" -y -n default
   log-warn "Done: ${1}"
 }
 
