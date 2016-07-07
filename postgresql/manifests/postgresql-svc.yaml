@@ -3,10 +3,10 @@ kind: Service
 metadata:
   name: postgresql
   labels:
-    app: postgresql
+    provider: postgresql
     heritage: helm
 spec:
   ports:
   - port: 5432
   selector:
-    app: postgresql
+    provider: postgresql
