@@ -1,24 +1,13 @@
+|![](https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Warning.svg/156px-Warning.svg.png) | Helm Classic v1 is no longer supported. See [kubernetes/charts](https://github.com/kubernetes/charts.git) for modern Charts that work with [Kubernetes Helm](https://github.com/kubernetes/helm.git).
+|---|---|
+
 # Helm Classic Chart Repository
 
 [![Build Status](https://travis-ci.org/helm/charts.svg?branch=master)](https://travis-ci.org/helm/charts)
 
-This repository contains Charts for Helm Classic, the Kubernetes Package Manager.
+This repository contains Charts for Helm Classic v1, the Kubernetes Package Manager.
 
 Visit the [Helm Classic repository](https://github.com/helm/helm-classic) to learn more.
-
-## Contributing
-
-Helm Classic charts are developed as part of a community effort.  To contribute:
-
-1. Fork this repository
-2. `helmc create foo && helmc edit foo`
-3. `cd ~/.helmc/cache && git checkout -b foo`
-4. `git add foo && git commit && git push`
-5. Submit a Pull Request
-
-Check out the [guide to writing awesome
-charts](https://github.com/helm/helm-classic/blob/master/docs/awesome.md)
-for more information.
 
 ## License
 
